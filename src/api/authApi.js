@@ -1,7 +1,5 @@
 import axiosInstance from './axiosConfig';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL;
-
 export const login = async (email, password) => {
   try {
     const response = await axiosInstance.post('/auth/login', { 
@@ -10,7 +8,7 @@ export const login = async (email, password) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error de inicio de sesión:', error.response?.data || error.message);
+    console.error('AXIOS: Error de inicio de sesión:', error.response?.data || error.message);
     throw error.response?.data || error;
   }
 };
@@ -31,17 +29,20 @@ export const logout = async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   } catch (error) {
-    console.error('Error de cierre de sesión:', error.response?.data || error.message);
+    console.error('AXIOS: Error de cierre de sesión:', error.response?.data || error.message);
     throw error;
   }
 };
 
 export const register = async (userData) => {
   try {
-    const response = await axiosInstance.post('/auth/register', userData);
+    console.log('AXIOS: Datos de registro:', userData);
+    const { email, password } = userData;
+    const response = await axiosInstance.post('/auth/register', { email, password });
+    console.log('AXIOS: Response de registro:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error de registro:', error.response?.data || error.message);
+    console.error('AXIOS: Error de registro:', error.response?.data || error.message);
     throw error.response?.data || error;
   }
 };

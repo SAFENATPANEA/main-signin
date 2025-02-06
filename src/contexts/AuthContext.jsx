@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (email, password) => {
     try {
       const response = await login(email, password);
+      console.log('Axios response:', response);
       const userData = response.user;
       
       // Guardar token y usuario
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       return userData;
     } catch (error) {
-      console.error('Error en signIn:', error);
+      console.error('AXIOS: Error en signIn:', error);
       throw error;
     }
   };

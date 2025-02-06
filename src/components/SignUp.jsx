@@ -110,7 +110,7 @@ const SignUp = () => {
       <Card 
         elevation={6}
         sx={{ 
-          px: 3,
+          px: 6,
           py: { xs: 6, sm: 4 }, 
           maxWidth: 500, 
           width: '90%', 

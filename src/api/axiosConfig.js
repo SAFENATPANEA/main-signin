@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
 const axiosInstance = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -38,9 +38,9 @@ axiosInstance.interceptors.response.use(
     };
     
     if (error.code === 'ERR_NETWORK') {
-      console.error('Error de conexión al servidor. Verifique que el servidor esté ejecutándose y sea accesible:', errorDetails);
+      console.error('AXIOS: Error de conexión al servidor. Verifique que el servidor esté ejecutándose y sea accesible:', errorDetails);
     } else {
-      console.error('Error en la petición:', errorDetails);
+      console.error('AXIOS: Error en la petición:', errorDetails);
     }
     
     return Promise.reject(error);
