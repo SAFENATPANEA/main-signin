@@ -6,8 +6,6 @@ import {
   TextField,
   Button,
   Alert,
-  FormControl,
-  FormLabel,
   Link,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -101,91 +99,135 @@ const SignUp = () => {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        minHeight: '90vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-        py: 4,
+        backgroundColor: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
+        py: 10,
       }}
     >
-      <Card sx={{ p: 4, maxWidth: 500, width: '100%', mx: 2 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-          <SitemarkIcon sx={{ mb: 2 }} />
-          <Typography variant="h4" component="h1">
+      <Card 
+        elevation={6}
+        sx={{ 
+          px: 3,
+          py: { xs: 6, sm: 4 }, 
+          maxWidth: 500, 
+          width: '90%', 
+          mx: 2,
+          borderRadius: 1,
+          transition: 'transform 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'scale(1.01)',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+          },
+          backgroundColor: 'background.paper',
+          boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          mb: 3 
+        }}>
+          <SitemarkIcon sx={{ 
+            mb: 2,
+            fontSize: '64px',
+            color: 'primary.main'
+          }} />
+          <Typography 
+            variant="h5" 
+            component="h1"
+            sx={{
+              fontWeight: 600,
+              color: 'primary.main'
+            }}
+          >
             Crear cuenta
           </Typography>
         </Box>
 
         {status.message && (
-          <Alert severity={status.type} sx={{ mb: 2 }}>
+          <Alert 
+            severity={status.type} 
+            sx={{ 
+              mb: 3,
+              '& .MuiAlert-message': {
+                width: '100%',
+                textAlign: 'center'
+              }
+            }}
+          >
             {status.message}
           </Alert>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <FormControl>
-            <FormLabel htmlFor="name">Nombre</FormLabel>
-            <TextField
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              fullWidth
-            />
-          </FormControl>
+        <Box 
+          component="form" 
+          onSubmit={handleSubmit} 
+          sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: 2 
+          }}
+        >
+          <TextField
+            label="Nombre"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            fullWidth
+            autoFocus
+          />
 
-          <FormControl>
-            <FormLabel htmlFor="last_name">Apellido</FormLabel>
-            <TextField
-              id="last_name"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleChange}
-              required
-              fullWidth
-            />
-          </FormControl>
+          <TextField
+            label="Apellido"
+            id="last_name"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
 
-          <FormControl>
-            <FormLabel htmlFor="email">Correo electrónico</FormLabel>
-            <TextField
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              fullWidth
-            />
-          </FormControl>
+          <TextField
+            label="Correo electrónico"
+            id="email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            fullWidth
+            autoComplete="email"
+          />
 
-          <FormControl>
-            <FormLabel htmlFor="password">Contraseña</FormLabel>
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              fullWidth
-            />
-          </FormControl>
+          <TextField
+            label="Contraseña"
+            id="password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            fullWidth
+            autoComplete="new-password"
+          />
 
-          <FormControl>
-            <FormLabel htmlFor="confirmPassword">Confirmar contraseña</FormLabel>
-            <TextField
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              fullWidth
-            />
-          </FormControl>
+          <TextField
+            label="Confirmar contraseña"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            fullWidth
+            autoComplete="new-password"
+          />
 
           <Button
             type="submit"
@@ -193,13 +235,38 @@ const SignUp = () => {
             fullWidth
             size="large"
             disabled={loading}
-            sx={{ mt: 1 }}
+            sx={{ 
+              mt: 2,
+              py: 1.5,
+              textTransform: 'none',
+              fontSize: '1rem',
+              fontWeight: 500,
+              borderRadius: 1.5,
+              boxShadow: 2,
+              '&:hover': {
+                boxShadow: 4,
+              },
+            }}
           >
             {loading ? 'Procesando...' : 'Registrarse'}
           </Button>
 
           <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Typography variant="body2">
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: 'text.secondary',
+                '& .MuiLink-root': {
+                  ml: 0.5,
+                  color: 'primary.main',
+                  textDecoration: 'none',
+                  fontWeight: 500,
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                },
+              }}
+            >
               ¿Ya tienes una cuenta?{' '}
               <Link
                 component="button"

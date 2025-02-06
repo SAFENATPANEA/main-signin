@@ -5,25 +5,47 @@ import {
   Button, 
   Toolbar, 
   Typography,
-  useTheme
+  useTheme,
+  IconButton,
+  Container,
+  useScrollTrigger,
 } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import fornavw from '../assets/fornavw.png';
 import { styled } from '@mui/material/styles';
+import { Menu as MenuIcon } from '@mui/icons-material';
+
+// Función para el efecto de elevación al scroll
+function ElevationScroll(props) {
+  const { children } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
 
 // Componentes estilizados
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: '#618c35',
-  boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
+  background: 'linear-gradient(90deg, #618c35 0%, #7baf44 100%)',
+  backdropFilter: 'blur(10px)',
+  transition: 'all 0.3s ease-in-out',
+  '&.MuiPaper-elevation4': {
+    boxShadow: '0 4px 20px 0 rgba(0,0,0,0.1)',
+  },
 }));
 
 const LogoContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  borderRadius: theme.shape.borderRadius,
   flexGrow: 1,
+  gap: theme.spacing(2),
   '& img': {
     height: '40px',
-    marginRight: theme.spacing(2),
     transition: 'transform 0.3s ease',
     '&:hover': {
       transform: 'scale(1.05)',
@@ -32,10 +54,14 @@ const LogoContainer = styled(Box)(({ theme }) => ({
 }));
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  padding: theme.spacing(1, 3),
+  minHeight: 70,
+  padding: theme.spacing(0, 3),
   [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(1, 5),
+    padding: theme.spacing(0, 5),
   },
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 }));
 
 const BrandText = styled(Typography)(({ theme }) => ({
@@ -49,43 +75,69 @@ const BrandText = styled(Typography)(({ theme }) => ({
 
 const LogoutButton = styled(Button)(({ theme }) => ({
   color: '#ffffff',
-  borderColor: '#ffffff',
-  borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(1, 3),
+  borderColor: 'rgba(255, 255, 255, 0.5)',
+  borderRadius: '50px',
+  padding: theme.spacing(0.8, 3),
   fontWeight: 600,
+  textTransform: 'none',
+  fontSize: '0.95rem',
+  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  backdropFilter: 'blur(5px)',
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderColor: '#ffffff',
+    transform: 'translateY(-1px)',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
   },
-  transition: 'all 0.3s ease',
+  '&:active': {
+    transform: 'translateY(0)',
+  },
+  transition: 'all 0.2s ease-in-out',
 }));
 
-const Navigation = () => {
+const MenuButton = styled(IconButton)(({ theme }) => ({
+  display: 'none',
+  color: '#ffffff',
+  marginRight: theme.spacing(2),
+  [theme.breakpoints.down('sm')]: {
+    display: 'flex',
+  },
+}));
+const Navigation = (props) => {
   const { signOut } = useAuth();
   const theme = useTheme();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <StyledAppBar position="static">
-        <StyledToolbar>
-          <LogoContainer>
-            <img 
-              src={fornavw}
-              alt="MegaSeller POS"
-            />
-            <BrandText variant="h6">
-              MegaSeller POS
-            </BrandText>
-          </LogoContainer>
-          <LogoutButton 
-            onClick={signOut}
-            variant="outlined"
-          >
-            Cerrar Sesión
-          </LogoutButton>
-        </StyledToolbar>
+    <ElevationScroll {...props}>
+      <StyledAppBar>
+        <Container maxWidth="xl">
+          <StyledToolbar>
+            <MenuButton
+              edge="start"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </MenuButton>
+            <LogoContainer>
+              <img 
+                src={fornavw}
+                alt="MegaSeller POS"
+              />
+              <BrandText variant="h6" noWrap>
+                MegaSeller POS
+              </BrandText>
+            </LogoContainer>
+            <LogoutButton 
+              onClick={signOut}
+              variant="outlined"
+              disableElevation
+            >
+              Cerrar Sesión
+            </LogoutButton>
+          </StyledToolbar>
+        </Container>
       </StyledAppBar>
-    </Box>
+    </ElevationScroll>
   );
 };
 

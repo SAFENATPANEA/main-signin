@@ -64,22 +64,28 @@ const SignIn = () => {
         }}
       >
         <Paper
-          elevation={3}
+          elevation={4}
           sx={{
             padding: 4,
+            marginTop: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
+            transition: 'transform 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'scale(1.01)',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+          },
           }}
         >
           <Box sx={{ mb: 3, textAlign: 'center' }}>
             <img
               src={forpage}
               alt="MegaSeller POS"
-              style={{ height: '80px', marginBottom: '16px' }}
+              style={{ height: '90px', marginBottom: '16px' }}
             />
-            <Typography component="h1" variant="h5">
+            <Typography component="h2" variant="h5">
               Iniciar Sesión
             </Typography>
           </Box>
