@@ -14,11 +14,13 @@ import {
 } from '@mui/material';
 import { Google as GoogleIcon, Facebook as FacebookIcon } from '@mui/icons-material';
 import forpage from './assets/forpage.png';
+import ForgotPassword from './components/ForgotPassword.jsx';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const { signIn, googleSignIn, facebookSignIn } = useAuth();
   const navigate = useNavigate();
 
@@ -113,6 +115,14 @@ const SignIn = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', mb: 2 }}>
+              <Button
+                onClick={() => setForgotPasswordOpen(true)}
+                sx={{ textTransform: 'none' }}
+              >
+                ¿Olvidaste tu contraseña?
+              </Button>
+            </Box>
             <Button
               type="submit"
               fullWidth
@@ -155,6 +165,10 @@ const SignIn = () => {
           </Box>
         </Paper>
       </Box>
+      <ForgotPassword
+        open={forgotPasswordOpen}
+        handleClose={() => setForgotPasswordOpen(false)}
+      />
     </Container>
   );
 };
