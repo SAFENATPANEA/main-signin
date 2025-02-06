@@ -55,8 +55,8 @@ const App = () => {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <Router>
+        <Router>
+          <AuthProvider>
             <Layout>
               <Routes>
                 <Route
@@ -102,8 +102,8 @@ const App = () => {
                 />
               </Routes>
             </Layout>
-          </Router>
-        </AuthProvider>
+          </AuthProvider>
+        </Router>
       </ThemeProvider>
     </GoogleOAuthProvider>
   );

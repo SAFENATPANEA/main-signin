@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
 
@@ -53,40 +53,118 @@ export default function ForgotPassword({ open, handleClose }) {
       PaperProps={{
         component: 'form',
         onSubmit: handleSubmit,
-        sx: { backgroundImage: 'none' },
+        sx: { 
+          backgroundImage: 'none',
+          borderRadius: 1,
+          minWidth: { xs: '90%', sm: '400px' },
+          maxWidth: '450px',
+          transition: 'transform 0.2s ease-in-out',
+          '&:hover': {
+            transform: 'scale(1.01)',
+          },
+          overflow: 'hidden',
+        },
+      }}
+      TransitionProps={{
+        timeout: 200,
+      }}
+      scroll="paper"
+      sx={{
+        '& .MuiDialog-container': {
+          overflow: 'hidden',
+        },
       }}
     >
-      <DialogTitle>Restablecer contraseña</DialogTitle>
-      <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-        <DialogContentText>
+      <DialogTitle sx={{
+        pb: 0,
+        pt: 2.5,
+        px: 3,
+        typography: 'h5',
+        fontWeight: 600,
+        textAlign: 'center',
+        color: 'primary.main'
+      }}>
+        Restablecer contraseña
+      </DialogTitle>
+      <DialogContent sx={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        width: '90%',
+        px: 3,
+        pt: '16px !important',
+        pb: '8px !important',
+      }}>
+        <DialogContentText sx={{
+          textAlign: 'center',
+          color: 'text.secondary',
+          fontSize: '0.95rem',
+          mb: 2
+        }}>
           Ingresa tu dirección de correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
         </DialogContentText>
         {status.message && (
-          <Alert severity={status.type} sx={{ mt: 1 }}>
+          <Alert 
+            severity={status.type} 
+            sx={{ 
+              mb: 2,
+              '& .MuiAlert-message': {
+                width: '100%',
+                textAlign: 'center'
+              }
+            }}
+          >
             {status.message}
           </Alert>
         )}
-        <OutlinedInput
+        <TextField
           autoFocus
           required
-          margin="dense"
-          id="email"
-          name="email"
-          placeholder="Correo electrónico"
-          type="email"
           fullWidth
+          id="email"
+          label="Correo Electrónico"
+          name="email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          margin="none"
+          autoComplete="email"
+          sx={{ mb: 1 }}
         />
       </DialogContent>
-      <DialogActions sx={{ pb: 3, px: 3 }}>
-        <Button onClick={handleClose} disabled={loading}>
+      <DialogActions sx={{ 
+        pb: 3, 
+        px: 3,
+        gap: 1,
+        justifyContent: 'center'
+      }}>
+        <Button 
+          onClick={handleClose} 
+          disabled={loading}
+          sx={{
+            minWidth: '120px',
+            textTransform: 'none',
+            fontSize: '0.95rem',
+            borderRadius: 1.5,
+            py: 1,
+          }}
+        >
           Cancelar
         </Button>
         <Button 
           variant="contained" 
           type="submit"
           disabled={loading}
+          sx={{
+            minWidth: '120px',
+            textTransform: 'none',
+            fontSize: '0.95rem',
+            borderRadius: 1.5,
+            py: 1,
+            boxShadow: 2,
+            '&:hover': {
+              boxShadow: 4,
+            },
+          }}
         >
           {loading ? 'Enviando...' : 'Continuar'}
         </Button>

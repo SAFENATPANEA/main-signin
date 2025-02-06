@@ -5,18 +5,35 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 
 const Layout = ({ children }) => {
   const { user } = useAuth();
+  
+  console.log('Layout - Estado del usuario:', user);
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      minHeight: '100vh', 
+      bgcolor: 'background.default' 
+    }}>
       <Navigation />
       <Box
         component="main"
         sx={{
-          pt: user ? 10 : 0, // Añade padding top solo si hay usuario (barra de navegación visible)
+          flexGrow: 1,
+          pt: user ? 10 : 0,
           minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column'
         }}
       >
-        <Container maxWidth="lg">
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
           {children}
         </Container>
       </Box>
