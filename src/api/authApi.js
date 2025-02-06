@@ -109,3 +109,51 @@ export const register = async (userData) => {
     throw error.response?.data || error;
   }
 };
+
+export const forgotPassword = async (email) => {
+  try {
+    console.log('Enviando solicitud de recuperación de contraseña:', { email });
+    const response = await axiosInstance.post('/auth/forgot-password', { email });
+    console.log('Respuesta de recuperación:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error en recuperación de contraseña:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+    
+    if (error.code === 'ERR_NETWORK') {
+      throw new Error('Error de conexión al servidor');
+    } else if (error.response?.status === 404) {
+      throw new Error('El correo electrónico no está registrado');
+    }
+    
+    throw error.response?.data?.message || error.message || 'Error al enviar el correo de recuperación';
+  }
+};
+
+export const resetPassword = async (token, newPassword) => {
+  try {
+    console.log('Enviando solicitud de restablecimiento de contraseña');
+    const response = await axiosInstance.post(`/auth/reset-password/${token}`, { 
+      password: newPassword 
+    });
+    console.log('Respuesta de restablecimiento:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error en restablecimiento de contraseña:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+    
+    if (error.response?.status === 400) {
+      throw new Error('Token inválido o expirado');
+    } else if (error.code === 'ERR_NETWORK') {
+      throw new Error('Error de conexión al servidor');
+    }
+    
+    throw error.response?.data?.message || error.message || 'Error al restablecer la contraseña';
+  }
+};

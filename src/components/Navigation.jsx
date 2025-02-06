@@ -135,7 +135,6 @@ const Navigation = (props) => {
     }
   };
 
-  // Solo renderiza la barra de navegación si hay un usuario autenticado
   if (!user || !user.token) {
     console.log('Navigation - No hay usuario autenticado');
     return null;
@@ -153,7 +152,7 @@ const Navigation = (props) => {
               onClick={handleClick}
               sx={{ display: { xs: 'flex', sm: 'none' } }}
             >
-              <AccountCircle />
+              <AccountCircle sx={{ fontSize: '2.2rem' }} />
             </MenuButton>
             
             <LogoContainer>
@@ -166,19 +165,31 @@ const Navigation = (props) => {
               </BrandText>
             </LogoContainer>
             
-            <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 2 }}>
-              <IconButton
-                onClick={handleClick}
-                sx={{ color: 'white' }}
-              >
-                <AccountCircle />
-              </IconButton>
-              <LogoutButton
-                variant="outlined"
-                onClick={handleLogout}
-              >
-                Cerrar Sesión
-              </LogoutButton>
+            <Box sx={{ 
+              display: { xs: 'none', sm: 'flex' }, 
+              alignItems: 'center', 
+              gap: 2,
+              ml: 'auto'
+            }}>
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: 1,
+                cursor: 'pointer'
+              }} onClick={handleClick}>
+                <IconButton sx={{ color: 'white', p: 0 }}>
+                  <AccountCircle sx={{ fontSize: '2.2rem' }} />
+                </IconButton>
+                <Typography 
+                  variant="body1" 
+                  sx={{ 
+                    color: 'white',
+                    display: { xs: 'none', md: 'block' }
+                  }}
+                >
+                  {user.email}
+                </Typography>
+              </Box>
             </Box>
             
             <Menu
@@ -199,11 +210,6 @@ const Navigation = (props) => {
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-              <MenuItem onClick={handleClose} disabled>
-                <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                  {user.email}
-                </Typography>
-              </MenuItem>
               <MenuItem onClick={handleClose}>Perfil</MenuItem>
               <MenuItem onClick={handleClose}>Mi Cuenta</MenuItem>
               <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>

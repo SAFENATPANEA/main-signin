@@ -1,161 +1,128 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { resetPassword } from '../api/authApi';
 import {
+  Container,
   Box,
-  Card,
   Typography,
   TextField,
   Button,
   Alert,
-  FormControl,
-  FormLabel,
+  CircularProgress,
+  Paper
 } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import { styled } from '@mui/material/styles';
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  marginTop: theme.spacing(8),
+  padding: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  maxWidth: '400px',
+  margin: 'auto'
+}));
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [status, setStatus] = useState({ type: '', message: '' });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
+  const { token } = useParams();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess(false);
+
+    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
-      setStatus({
-        type: 'error',
-        message: 'Las contraseñas no coinciden'
-      });
+      setError('Las contraseñas no coinciden');
       return;
     }
 
+    // Validar longitud mínima
     if (password.length < 6) {
-      setStatus({
-        type: 'error',
-        message: 'La contraseña debe tener al menos 6 caracteres'
-      });
+      setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
-
-    setLoading(true);
-    setStatus({ type: '', message: '' });
 
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/reset-password-confirm`, {
-        token,
-        newPassword: password
-      });
-      
-      setStatus({
-        type: 'success',
-        message: 'Tu contraseña ha sido actualizada exitosamente'
-      });
-      
+      setLoading(true);
+      await resetPassword(token, password);
+      setSuccess(true);
       setTimeout(() => {
         navigate('/');
-      }, 2000);
-
+      }, 3000);
     } catch (error) {
-      setStatus({
-        type: 'error',
-        message: error.response?.data?.message || 'Error al restablecer la contraseña. Por favor, intenta de nuevo.'
-      });
+      setError(error.message || 'Error al restablecer la contraseña');
     } finally {
       setLoading(false);
     }
   };
 
-  if (!token) {
-    return (
-      <Box
-        sx={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-        }}
-      >
-        <Card sx={{ p: 4, maxWidth: 400, width: '100%' }}>
-          <Typography variant="h5" component="h1" gutterBottom>
-            Enlace inválido
-          </Typography>
-          <Typography>
-            El enlace para restablecer la contraseña es inválido o ha expirado.
-          </Typography>
-          <Button
-            variant="contained"
-            fullWidth
-            onClick={() => navigate('/')}
-            sx={{ mt: 2 }}
-          >
-            Volver al inicio
-          </Button>
-        </Card>
-      </Box>
-    );
-  }
-
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-      }}
-    >
-      <Card sx={{ p: 4, maxWidth: 400, width: '100%' }}>
-        <Typography variant="h5" component="h1" gutterBottom>
-          Restablecer contraseña
+    <Container component="main" maxWidth="sm">
+      <StyledPaper elevation={3}>
+        <Typography component="h1" variant="h5" gutterBottom>
+          Restablecer Contraseña
         </Typography>
         
-        {status.message && (
-          <Alert severity={status.type} sx={{ mb: 2 }}>
-            {status.message}
+        {error && (
+          <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+        
+        {success && (
+          <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
+            Contraseña restablecida exitosamente. Redirigiendo al inicio de sesión...
           </Alert>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <FormControl>
-            <FormLabel htmlFor="password">Nueva contraseña</FormLabel>
-            <TextField
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel htmlFor="confirmPassword">Confirmar contraseña</FormLabel>
-            <TextField
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              fullWidth
-            />
-          </FormControl>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Nueva Contraseña"
+            type="password"
+            id="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading || success}
+          />
+          
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirmar Contraseña"
+            type="password"
+            id="confirmPassword"
+            autoComplete="new-password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            disabled={loading || success}
+          />
 
           <Button
             type="submit"
-            variant="contained"
             fullWidth
-            disabled={loading}
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={loading || success}
           >
-            {loading ? 'Procesando...' : 'Cambiar contraseña'}
+            {loading ? <CircularProgress size={24} /> : 'Restablecer Contraseña'}
           </Button>
         </Box>
-      </Card>
-    </Box>
+      </StyledPaper>
+    </Container>
   );
 };
 

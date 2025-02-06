@@ -100,6 +100,7 @@ const App = () => {
                     </PublicRoute>
                   }
                 />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
               </Routes>
             </Layout>
           </AuthProvider>
