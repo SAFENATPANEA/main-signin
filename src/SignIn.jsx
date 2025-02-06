@@ -11,46 +11,73 @@ import {
   Divider,
   Alert,
   Stack,
+  CircularProgress,
 } from '@mui/material';
 import { Google as GoogleIcon, Facebook as FacebookIcon } from '@mui/icons-material';
 import forpage from './assets/forpage.png';
 import ForgotPassword from './components/ForgotPassword.jsx';
 
-
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const { signIn, googleSignIn, facebookSignIn } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setError('');
+    setLoading(true);
+
     try {
+      console.log('Intentando iniciar sesión con:', email);
       await signIn(email, password);
-      navigate('/dashboard');
+      console.log('Inicio de sesión exitoso');
     } catch (error) {
+      console.error('Error en handleSubmit:', error);
       setError(error.message || 'Error al iniciar sesión');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    if (loading) return;
+
+    setError('');
+    setLoading(true);
+
     try {
+      console.log('Intentando iniciar sesión con Google');
       await googleSignIn();
-      navigate('/dashboard');
+      console.log('Inicio de sesión con Google exitoso');
     } catch (error) {
+      console.error('Error en handleGoogleSignIn:', error);
       setError(error.message || 'Error al iniciar sesión con Google');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleFacebookSignIn = async () => {
+    if (loading) return;
+
+    setError('');
+    setLoading(true);
+
     try {
+      console.log('Intentando iniciar sesión con Facebook');
       await facebookSignIn();
-      navigate('/dashboard');
+      console.log('Inicio de sesión con Facebook exitoso');
     } catch (error) {
+      console.error('Error en handleFacebookSignIn:', error);
       setError(error.message || 'Error al iniciar sesión con Facebook');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +91,15 @@ const SignIn = () => {
           alignItems: 'center',
         }}
       >
+        <img
+          src={forpage}
+          alt="MegaSeller POS"
+          style={{ height: '90px', marginBottom: '16px' }}
+        />
+        <Typography component="h2" variant="h5">
+          Iniciar Sesión
+        </Typography>
+
         <Paper
           elevation={4}
           sx={{
@@ -74,23 +110,12 @@ const SignIn = () => {
             alignItems: 'center',
             width: '100%',
             transition: 'transform 0.2s ease-in-out',
-          '&:hover': {
-            transform: 'scale(1.01)',
-            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-          },
+            '&:hover': {
+              transform: 'scale(1.01)',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+            },
           }}
         >
-          <Box sx={{ mb: 3, textAlign: 'center' }}>
-            <img
-              src={forpage}
-              alt="MegaSeller POS"
-              style={{ height: '90px', marginBottom: '16px' }}
-            />
-            <Typography component="h2" variant="h5">
-              Iniciar Sesión
-            </Typography>
-          </Box>
-
           {error && (
             <Alert severity="error" sx={{ mb: 2, width: '100%' }}>
               {error}
@@ -109,6 +134,7 @@ const SignIn = () => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
             <TextField
               margin="normal"
@@ -121,23 +147,28 @@ const SignIn = () => {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
             />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', mb: 2 }}>
-              <Button
-                onClick={() => setForgotPasswordOpen(true)}
-                sx={{ textTransform: 'none' }}
-              >
-                ¿Olvidaste tu contraseña?
-              </Button>
-            </Box>
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
-              Iniciar Sesión
+              {loading ? <CircularProgress size={24} /> : 'Iniciar Sesión'}
             </Button>
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', mb: 2 }}>
+              <Button
+                onClick={() => setForgotPasswordOpen(true)}
+                sx={{ textTransform: 'none' }}
+                disabled={loading}
+              >
+                ¿Olvidaste tu contraseña?
+              </Button>
+            </Box>
 
             <Divider sx={{ my: 2 }}>o continuar con</Divider>
 
@@ -147,6 +178,7 @@ const SignIn = () => {
                 variant="outlined"
                 startIcon={<GoogleIcon />}
                 onClick={handleGoogleSignIn}
+                disabled={loading}
               >
                 Google
               </Button>
@@ -156,6 +188,7 @@ const SignIn = () => {
                 startIcon={<FacebookIcon />}
                 onClick={handleFacebookSignIn}
                 sx={{ backgroundColor: '#1877F2', color: 'white', '&:hover': { backgroundColor: '#1665D8' } }}
+                disabled={loading}
               >
                 Facebook
               </Button>
