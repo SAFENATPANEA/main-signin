@@ -28,6 +28,7 @@ import Layout from './components/layouts/Layout.jsx';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme/theme.js';
+import MainDash from './components/layouts/dashboard/MainDash.jsx';
 
 // Componente para proteger rutas
 const ProtectedRoute = ({ children }) => {
@@ -44,7 +45,7 @@ const PublicRoute = ({ children }) => {
   const { user } = useAuth();
   
   if (user) {
-    return <Navigate to="/setup" replace />;
+    return <Navigate to="/maindash" replace />;
   }
   return children;
 };
@@ -75,10 +76,10 @@ const App = () => {
                   }
                 />
                 <Route
-                  path="/setup"
+                  path="/maindash"
                   element={
                     <ProtectedRoute>
-                      <Setup />
+                      <MainDash />
                     </ProtectedRoute>
                   }
                 />

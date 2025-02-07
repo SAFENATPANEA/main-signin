@@ -1,0 +1,9 @@
+.navbar {
+    background-color: var(--primary-color);
+  }
+  
+  .MuiToolbar-root {
+    justify-content: space-between;
+  }
+  
+  

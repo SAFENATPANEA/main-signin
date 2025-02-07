@@ -76,27 +76,6 @@ const BrandText = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const LogoutButton = styled(Button)(({ theme }) => ({
-  color: '#ffffff',
-  borderColor: 'rgba(255, 255, 255, 0.5)',
-  borderRadius: '50px',
-  padding: theme.spacing(0.8, 3),
-  fontWeight: 600,
-  textTransform: 'none',
-  fontSize: '0.95rem',
-  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  backdropFilter: 'blur(5px)',
-  '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderColor: '#ffffff',
-    transform: 'translateY(-1px)',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-  },
-  '&:active': {
-    transform: 'translateY(0)',
-  },
-  transition: 'all 0.2s ease-in-out',
-}));
 
 const MenuButton = styled(IconButton)(({ theme }) => ({
   display: 'none',

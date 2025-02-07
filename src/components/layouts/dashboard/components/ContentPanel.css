@@ -1,0 +1,12 @@
+.content-panel {
+  flex-grow: 1;
+  padding: 24px;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .content-panel {
+    margin-left: 0 !important;
+  }
+}
+

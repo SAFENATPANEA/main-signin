@@ -1,0 +1,38 @@
+.sidebar {
+    width: 240px;
+    transition: width 0.3s ease;
+  }
+  
+  .sidebar .MuiListItem-root {
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar .MuiListItem-root:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  .sidebar .MuiListItemIcon-root {
+    color: var(--primary-color);
+    min-width: 40px;
+  }
+  
+  .sidebar .MuiListItemText-primary {
+    color: var(--text-color);
+  }
+  
+  @media (max-width: 600px) {
+    .sidebar {
+      position: fixed;
+      z-index: 1200;
+    }
+  
+    .sidebar:not(.open) {
+      width: 0;
+    }
+  
+    .sidebar:not(.open) .MuiDrawer-paper {
+      width: 0;
+    }
+  }
+  
+  

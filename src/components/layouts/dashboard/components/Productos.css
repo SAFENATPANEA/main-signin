@@ -1,0 +1,58 @@
+.productos {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.productos h1 {
+    grid-column: 1 / -1;
+    margin: 0 0 24px 8px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+}
+  
+.MuiCard-root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.MuiCard-root:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Ajustes para tablets */
+@media (max-width: 900px) {
+    .productos {
+        padding: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+    }
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 600px) {
+    .productos {
+        padding: 16px;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .productos h1 {
+        margin: 0 0 16px 4px;
+        font-size: 1.25rem;
+    }
+
+    .MuiCard-root {
+        min-height: 100px;
+    }
+}
