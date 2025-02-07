@@ -9,8 +9,8 @@ import {
   Link,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext.jsx';
-import { SitemarkIcon } from './CustomIcons.jsx';
+import { useAuth } from '../../contexts/AuthContext.jsx';
+import { SitemarkIcon } from '../icons/CustomIcons.jsx';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({

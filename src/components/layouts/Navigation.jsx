@@ -12,8 +12,8 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { useAuth } from '../contexts/AuthContext.jsx';
-import fornavw from '../assets/fornavw.png';
+import { useAuth } from '../../contexts/AuthContext.jsx';
+import fornavw from '../../assets/fornavw.png';
 import { styled } from '@mui/material/styles';
 import { Menu as MenuIcon, AccountCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { inputsCustomizations } from './customizations/inputs';
-import { dataDisplayCustomizations } from './customizations/dataDisplay';
-import { feedbackCustomizations } from './customizations/feedback';
-import { navigationCustomizations } from './customizations/navigation';
-import { surfacesCustomizations } from './customizations/surfaces';
-import { colorSchemes, typography, shadows, shape } from './themePrimitives';
+import { inputsCustomizations } from './customizations/inputs.jsx';
+import { dataDisplayCustomizations } from './customizations/dataDisplay.jsx';
+import { feedbackCustomizations } from './customizations/feedback.jsx';
+import { navigationCustomizations } from './customizations/navigation.jsx';
+import { surfacesCustomizations } from './customizations/surfaces.jsx';
+import { colorSchemes, typography, shadows, shape } from './themePrimitives.jsx';
 
 export default function AppTheme({ children, disableCustomTheme, themeComponents }) {
   const theme = React.useMemo(() => {

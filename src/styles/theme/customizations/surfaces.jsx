@@ -1,6 +1,6 @@
  
 import { alpha } from '@mui/material/styles';
-import { gray } from '../themePrimitives';
+import { gray } from '../themePrimitives.jsx';
 
 export const surfacesCustomizations = {
   MuiAccordion: {

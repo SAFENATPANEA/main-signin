@@ -13,22 +13,21 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import ForgotPassword from './components/ForgotPassword.jsx';
-import AppTheme from './theme/AppTheme.jsx';
-import ColorModeSelect from './theme/ColorModeSelect.jsx';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons.jsx';
+import ForgotPassword from './components/login/ForgotPassword.jsx';
+import AppTheme from './styles/theme/AppTheme.jsx';
+import ColorModeSelect from './styles/theme/ColorModeSelect.jsx';
+import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/icons/CustomIcons.jsx';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import SignIn from './SignIn.jsx';
-import Setup from './SetUp.jsx';
-import Transactions from './Transactions.jsx'; 
-import ResetPassword from './components/ResetPassword.jsx'; 
-import SignUp from './components/SignUp.jsx';
-import Layout from './components/Layout.jsx';
-import { AuthProvider } from './contexts/AuthContext.jsx';
-import { useAuth } from './contexts/AuthContext.jsx';
+import SignIn from './components/login/SignIn.jsx';
+import Setup from './components/login/SetUp.jsx';
+import Transactions from './components/sales/Transactions.jsx'; 
+import ResetPassword from './components/login/ResetPassword.jsx'; 
+import SignUp from './components/login/SignUp.jsx';
+import Layout from './components/layouts/Layout.jsx';
+import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme/theme.js';
+import theme from './styles/theme/theme.js';
 
 // Componente para proteger rutas
 const ProtectedRoute = ({ children }) => {

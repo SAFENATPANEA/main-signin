@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './contexts/AuthContext.jsx';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 import {
   Box,
   Button,
@@ -14,8 +14,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Google as GoogleIcon, Facebook as FacebookIcon } from '@mui/icons-material';
-import forpage from './assets/forpage.png';
-import ForgotPassword from './components/ForgotPassword.jsx';
+import forpage from '../../assets/forpage.png';
+import ForgotPassword from './ForgotPassword.jsx';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');

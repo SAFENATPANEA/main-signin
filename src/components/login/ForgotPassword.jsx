@@ -10,7 +10,7 @@ import {
   CircularProgress,
   Typography
 } from '@mui/material';
-import { forgotPassword } from '../api/authApi';
+import { forgotPassword } from '../../api/authApi';
 
 const ForgotPassword = ({ open, handleClose }) => {
   const [email, setEmail] = useState('');

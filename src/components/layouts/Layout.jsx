@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
 import Navigation from './Navigation.jsx';
-import { useAuth } from '../contexts/AuthContext.jsx';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 
 const Layout = ({ children }) => {
   const { user } = useAuth();
