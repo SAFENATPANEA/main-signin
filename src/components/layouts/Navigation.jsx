@@ -17,7 +17,7 @@ import fornavw from '../../assets/fornavw.png';
 import { styled } from '@mui/material/styles';
 import { Menu as MenuIcon, AccountCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-
+import SideMenuIcon from "@mui/icons-material/Menu"
 // Función para el efecto de elevación al scroll
 function ElevationScroll(props) {
   const { children } = props;
@@ -77,21 +77,11 @@ const BrandText = styled(Typography)(({ theme }) => ({
 }));
 
 
-const MenuButton = styled(IconButton)(({ theme }) => ({
-  display: 'none',
-  color: '#ffffff',
-  marginRight: theme.spacing(2),
-  [theme.breakpoints.down('sm')]: {
-    display: 'flex',
-  },
-}));
 
-const Navigation = (props) => {
+const Navigation = ({ toggleSidebar, toggleDarkMode, sidebarOpen }) => {
   const { signOut, user } = useAuth();
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
 
   console.log('Navigation - Estado del usuario:', user);
 
@@ -121,19 +111,18 @@ const Navigation = (props) => {
 
   console.log('Navigation - Renderizando barra de navegación');
   return (
-    <ElevationScroll {...props}>
-      <StyledAppBar>
+    <StyledAppBar>
         <Container maxWidth="xl">
           <StyledToolbar>
-            <MenuButton
-              edge="start"
-              aria-label="menu"
-              onClick={handleClick}
-              sx={{ display: { xs: 'flex', sm: 'none' } }}
-            >
-              <AccountCircle sx={{ fontSize: '2.2rem' }} />
-            </MenuButton>
-            
+          <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={toggleSidebar}
+          sx={{ marginRight: 2 }}
+        >
+          <MenuIcon />
+        </IconButton>
             <LogoContainer>
               <img 
                 src={fornavw}
@@ -196,7 +185,6 @@ const Navigation = (props) => {
           </StyledToolbar>
         </Container>
       </StyledAppBar>
-    </ElevationScroll>
   );
 };
 

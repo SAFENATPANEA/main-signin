@@ -28,7 +28,7 @@ const Navbar = ({ toggleSidebar, toggleDarkMode, sidebarOpen }) => {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={toggleSidebar}
+          onClick={() => toggleSidebar()}
           sx={{ marginRight: 2 }}
         >
           <MenuIcon />
@@ -78,4 +78,3 @@ const Navbar = ({ toggleSidebar, toggleDarkMode, sidebarOpen }) => {
 }
 
 export default Navbar
-

@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       
       // Redirigir al usuario
-      navigate('/setup');
+      navigate('/maindash');
       return userData;
     } catch (error) {
       console.error('Error en signIn:', error);

@@ -2,10 +2,8 @@
 
 import { useState } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { ThemeProvider, createTheme } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
-import Navbar from "./components/Navbar"
 import Sidebar from "./components/Sidebar"
 import ContentPanel from "./components/ContentPanel"
 import Productos from "./components/Productos"
@@ -18,44 +16,16 @@ import "./MainDash.css"
 
 const MainDash = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [darkMode, setDarkMode] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? "dark" : "light",
-      primary: {
-        main: "#618c35",
-      },
-      secondary: {
-        main: "#87a668",
-      },
-      background: {
-        default: darkMode ? "#333333" : "#f2f2f2",
-        paper: darkMode ? "#424242" : "#ffffff",
-      },
-    },
-    typography: {
-      fontFamily: "Roboto, sans-serif",
-    },
-  })
-
+ 
+  
   const handleDrawerToggle = () => {
-    if (window.innerWidth < 600) {
-      setMobileOpen(!mobileOpen)
-    } else {
-      setSidebarOpen(!sidebarOpen)
-    }
-  }
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
+    setSidebarOpen(!sidebarOpen)
   }
 
   return (
   
-    <Box sx={{ display: "flex" }}>
-          <Sidebar open={window.innerWidth < 600 ? mobileOpen : sidebarOpen} toggleSidebar={handleDrawerToggle} />
+        <Box sx={{ display: "flex" }}>
+           <Sidebar open={sidebarOpen} toggleSidebar={handleDrawerToggle} />
           <ContentPanel sidebarOpen={sidebarOpen}>
             <Routes>
               <Route path="/productos" element={<Productos />} />
@@ -67,10 +37,9 @@ const MainDash = () => {
               <Route path="/" element={<Productos />} />
             </Routes>
           </ContentPanel>
+         
         </Box>
   )
 }
 
 export default MainDash
-
- 

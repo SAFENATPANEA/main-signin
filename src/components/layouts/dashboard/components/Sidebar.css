@@ -25,14 +25,4 @@
       position: fixed;
       z-index: 1200;
     }
-  
-    .sidebar:not(.open) {
-      width: 0;
-    }
-  
-    .sidebar:not(.open) .MuiDrawer-paper {
-      width: 0;
-    }
   }
-  
-  
